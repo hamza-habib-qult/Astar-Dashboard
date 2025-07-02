@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ASTAR Dashboard</title>
+  <script src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #D7DCE5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      background: #2c3e50;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      background: #D7DCE5;
+      width: 100%;
+    }
+
+    .tabs button {
+      background: #bdc3c7;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .tabs button.active {
+      background: #fff;
+    }
+
+    .viz-container {
+      width: 95%;
+      max-width: 1100px;
+      height: 90vh;
+      background: #fff;
+      margin: 20px auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    #tableauViz * {
+      padding: 0 !important;
+      margin: 0 !important;
+      box-sizing: border-box;
+    }
+
+    /* 🔧 Optional: Specific classes Tableau injects */
+    .vizContainer,
+    .tableauViz,
+    .tab-widget,
+    .tabDashboard,
+    .tabCanvas {
+      padding: 0 !important;
+      margin: 0 !important;
+      background: none !important;
+      box-shadow: none !important;
+    }
+
+    /* 🧪 Debug (optional) */
+    /* #tableauViz {
+      border: 2px solid red;
+    } */
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="https://raw.githubusercontent.com/hamzahabib5/Tableau-Public/main/d6979d750c14ba29ecf714b17f77567ca74277fe.png" alt="Logo" />
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="active" onclick="loadDashboard('Dashboard1', this)">Overview</button>
+  <button onclick="loadDashboard('Dashboard2', this)">Status</button>
+  <button onclick="loadDashboard('Dashboard3', this)">Comparative Data</button>
+  <button onclick="loadDashboard('Dashboard4', this)">Failure Category</button>
+  <button onclick="loadDashboard('Dashboard5', this)">Gap Report</button>
+</div>
+
+<div class="viz-container" id="tableauViz"></div>
+
+<script>
+let viz;
+
+function loadDashboard(viewName, btn) {
+  document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const containerDiv = document.getElementById("tableauViz");
+  const url = `https://public.tableau.com/views/ASTAR_Joecopy/${viewName}?:embed=y&:display_count=yes`;
+
+  if (viz) viz.dispose();
+
+  const options = {
+    hideTabs: true,
+    width: "1000px",   // Adjust as needed
+    height: "800px"
+  };
+
+  viz = new tableau.Viz(containerDiv, url, options);
+}
+
+// Load first view
+loadDashboard('Dashboard1', document.querySelector('.tabs button.active'));
+</script>
+
+</body>
+</html>
